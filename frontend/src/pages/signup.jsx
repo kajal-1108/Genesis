@@ -1,39 +1,45 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Signup = () => {
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match");
       return;
     }
 
     try {
       setLoading(true);
-      console.log("Sending signup request:", {
-        name: formData.name,
-        email: formData.email,
-        password: "********"
-      });
-      
-      const res = await fetch("http://localhost:5000/api/auth/signup", {
+
+      const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -42,26 +48,18 @@ const Signup = () => {
       });
 
       const data = await res.json();
-      console.log("Signup response:", data);
-      setLoading(false);
 
-      if (res.ok) {
-        alert("Signup successful! Please login.");
-        navigate("/login");
-      } else {
-        // Handle validation errors better
-        if (data.errors && Array.isArray(data.errors)) {
-          alert(`Validation error: ${data.errors[0].msg}`);
-        } else if (data.msg) {
-          alert(data.msg);
-        } else {
-          alert("Signup failed for unknown reason!");
-        }
+      if (!res.ok) {
+        throw new Error(data.msg || "Signup failed");
       }
-    } catch (error) {
+
+      alert("Signup successful! Please login.");
+      navigate("/login");
+    } catch (err) {
+      console.error("Signup error:", err);
+      setError(err.message || "Something went wrong");
+    } finally {
       setLoading(false);
-      console.error("Error during signup:", error);
-      alert("Network error. Please check your connection and try again.");
     }
   };
 
@@ -69,6 +67,7 @@ const Signup = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">Create Account</h2>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -79,6 +78,7 @@ const Signup = () => {
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
+
           <input
             type="email"
             name="email"
@@ -88,6 +88,7 @@ const Signup = () => {
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
+
           <input
             type="password"
             name="password"
@@ -97,6 +98,7 @@ const Signup = () => {
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
+
           <input
             type="password"
             name="confirmPassword"
@@ -106,6 +108,8 @@ const Signup = () => {
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             required
           />
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button
             type="submit"
