@@ -1,0 +1,89 @@
+# Genesis Backend
+
+This directory contains the Express.js backend server for the Genetic Trait Predictor and Family Tree Visualizer application.
+
+## Architecture
+
+The backend follows a RESTful API architecture with the following components:
+
+- **Express Server**: Handles HTTP requests and responses
+- **MongoDB Database**: Stores user data, genetic information, and prediction results
+- **Authentication**: JWT-based user authentication system
+- **API Routes**: Endpoints for user management, genetic data processing, and ML predictions
+- **Python Integration**: Communication with Python ML models for genetic trait prediction
+
+## Directory Structure
+
+```
+backend/
+├── models/              # MongoDB schemas
+│   └── user.js          # User model definition
+├── routes/              # API route definitions
+│   └── auth.js          # Authentication routes
+├── server.js            # Main server entry point
+├── package.json         # Dependencies and scripts
+└── .env                 # Environment variables (not committed)
+```
+
+## Environment Variables
+
+Create a `.env` file in the backend directory with the following variables:
+
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+PORT=5000
+```
+
+> **Important**: Never commit your `.env` file to version control. Make sure it's included in your `.gitignore` file.
+
+## Available Scripts
+
+```bash
+# Install dependencies
+npm install
+
+# Start the server in production mode
+npm start
+
+# Start the server in development mode (requires nodemon)
+npm run dev
+```
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/signup`: Register a new user
+- `POST /api/auth/login`: Authenticate a user and return a JWT
+
+### Genetic Prediction
+- `POST /api/predict`: Submit genetic data and receive trait predictions
+
+## Genetic Trait Prediction
+
+The `/api/predict` endpoint currently uses a placeholder prediction model that will be replaced with a more sophisticated machine learning approach. The final implementation will:
+
+1. Accept genetic SNP data from the client
+2. Process and normalize the data
+3. Pass the processed data to the Python ML model via API
+4. Return the predictions with confidence scores and explanations
+
+## Integration with ML Models
+
+The backend will communicate with Python-based ML models through:
+- REST API calls to a Flask microservice
+- Direct Python subprocess execution with data passing
+
+## Data Security
+
+User genetic data is highly sensitive. The backend implements:
+- Data encryption for sensitive information
+- Secure API endpoints with JWT authentication
+- Data minimization and purpose limitation
+
+## Future Improvements
+
+1. Add comprehensive test suite
+2. Implement real-time data processing with WebSockets
+3. Set up a caching layer for frequent queries
+4. Add detailed logging and monitoring

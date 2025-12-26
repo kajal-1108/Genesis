@@ -1,0 +1,88 @@
+# Genesis: Genetic Trait Predictor and Family Tree Visualizer
+
+## Project Abstract
+Genesis is an AI-driven system capable of predicting human phenotypic traits based on genomic data. By utilizing Single Nucleotide Polymorphism (SNP) information and applying machine learning algorithms, the system predicts traits such as eye color, height, and possible disease predispositions. Explainable Artificial Intelligence (XAI) techniques are integrated to enhance the transparency and interpretability of model predictions.
+
+An interactive family tree visualizer has been implemented to represent hereditary patterns and genetic relationships across generations. This visualization aids users, healthcare professionals, and genetic counselors in understanding trait inheritance in an intuitive manner. 
+
+The system is developed using Python with frameworks like TensorFlow, Flask, and D3.js for visualization, and ensures secure data storage with privacy compliance.
+
+Overall, the project represents a convergence of bioinformatics, artificial intelligence, and data visualization to promote awareness of genetic inheritance and proactive healthcare planning. It provides an accessible and educational platform for both researchers and individuals interested in exploring their genetic background.
+
+## Repository Structure
+
+```
+Genesis/
+├── backend/                 # Express server with MongoDB integration
+│   ├── models/              # Database models
+│   ├── routes/              # API endpoints
+│   ├── server.js            # Server entry point
+│   └── .env                 # Environment variables (not committed)
+│
+└── frontend/                # React application built with Vite
+    ├── public/              # Static files
+    ├── src/                 # Source code
+    │   ├── assets/          # Images and other static assets
+    │   ├── components/      # Reusable React components
+    │   ├── context/         # React context providers
+    │   ├── pages/           # Page components
+    │   ├── App.jsx          # Main application component
+    │   └── main.jsx         # Application entry point
+    └── index.html           # HTML entry point
+```
+
+## Technology Stack
+
+- **Frontend**: React, Vite, TailwindCSS, D3.js
+- **Backend**: Express.js, MongoDB
+- **ML Components**: Python, TensorFlow, Flask for serving models
+- **Authentication**: JWT-based auth system
+
+## Installation and Setup
+
+### Prerequisites
+- Node.js (v14+)
+- MongoDB
+- Python 3.8+ (for ML components)
+
+### Backend Setup
+```bash
+cd backend
+npm install
+# Create .env file with MONGO_URI and JWT_SECRET
+npm run dev
+```
+
+### Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Development Roadmap
+
+1. ✅ Initial project setup and repository structure
+2. ✅ Basic authentication system
+3. ✅ Frontend UI components and routing
+4. 🔄 Genetic trait prediction form implementation
+5. 🔄 Family tree visualization component
+6. ⬜ Integration with Python ML models
+7. ⬜ Implementation of XAI techniques
+8. ⬜ Data privacy and security enhancements
+9. ⬜ User testing and feedback integration
+10. ⬜ Deployment and documentation
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## License
+
+This project is licensed under the [LICENSE NAME] - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments
+
+- Genomic data sources: NCBI dbSNP, 1000 Genomes Project, HapMap
+- Research papers and methodologies that inspired this work
+- Open source libraries and frameworks that made this project possible
